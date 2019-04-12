@@ -1,4 +1,4 @@
-console.info('Calculating solution for Project Euler Problem 3...\r\n');
+console.info('Calculating solution for Project Euler Problem 13...\r\n');
 const start = Date.now();
 
 const numbers = 
