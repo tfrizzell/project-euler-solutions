@@ -3,7 +3,7 @@ console.info('Calculating solution for Project Euler Problem 5...\r\n');
 const start = Date.now();
 
 const isFactorOf = (number, factor) =>
-    (number / factor) % 1 === 0;
+    number % factor === 0;
 
 const factors = Array(20).fill(0).map((_, index) => index + 1);
 

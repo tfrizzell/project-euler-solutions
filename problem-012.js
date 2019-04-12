@@ -11,7 +11,7 @@ const getSum = (accumulator, value) =>
     accumulator + value;
 
 const isFactorOf = (number, factor) =>
-    (number / factor) % 1 === 0;
+    number % factor === 0;
 
 const mapValue = (_, index) =>
     index + 1;
