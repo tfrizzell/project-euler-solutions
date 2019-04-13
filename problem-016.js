@@ -22,15 +22,5 @@ const power = (base, exponent) => {
     return value.split('').reverse().join('');
 };
 
-console.log(power(2, 0));
-console.log(power(2, 1));
-console.log(power(2, 2));
-console.log(power(2, 3));
-console.log(power(2, 4));
-console.log(power(2, 5));
-console.log(power(2, 6));
-console.log(power(2, 7));
-console.log(power(2, 8));
-
 console.log('Result:', power(2, 1000).split('').reduce((accumulator, value) => accumulator + parseInt(value), 0));
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);
