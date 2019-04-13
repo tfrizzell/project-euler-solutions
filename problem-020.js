@@ -6,7 +6,7 @@ const factorial = (number) => {
         return '1';
     }
 
-    let value = factorial(number - 1),
+    let value = factorial(number - 1).split('').reverse().join(''),
         carry = 0;
     
     for (let i = 0; i < value.length; i++) {
