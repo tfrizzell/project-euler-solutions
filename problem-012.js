@@ -1,7 +1,7 @@
 console.info('Calculating solution for Project Euler Problem 12...\r\n');
 const start = Date.now();
 
-const getFactors = (number) =>
+const getDivisors = (number) =>
     Array(Math.floor(Math.sqrt(number))).fill(0)
         .map(mapValue)
         .filter(value => isFactorOf(number, value))
@@ -27,7 +27,7 @@ let index = 0,
 
 while (factors.length <= 500) {
     result = triangleNumber(index++);
-    factors = getFactors(result);
+    factors = getDivisors(result);
 }
 
 console.log('Result:', result);
