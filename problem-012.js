@@ -21,8 +21,8 @@ const triangleNumber = (number) =>
         .map(mapValue)
         .reduce(getSum, 0);
 
-let index = 0,
-    factors = [],
+let factors = [],
+    index = 0,
     result;
 
 while (factors.length <= 500) {
