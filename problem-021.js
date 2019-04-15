@@ -2,7 +2,7 @@ console.info('Calculating solution for Project Euler Problem 21...\r\n');
 const start = Date.now();
 
 const amicable = (number) =>
-    amicable[number] || (amicable[number] = getProperDivisors(number).reduce(sumFactors, 0));
+    amicable[number] || (amicable[number] = getProperDivisors(number).reduce(sum, 0));
 
 const getProperDivisors = (number) =>
     getProperDivisors[number] || (getProperDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0)
@@ -17,7 +17,7 @@ const isFactorOf = (number, factor) =>
 const mapValue = (_, index) =>
     index + 1;
 
-const sumFactors = (accumulator, value) =>
+const sum = (accumulator, value) =>
     accumulator + value;
 
 let result = 0;
@@ -26,7 +26,7 @@ for (let i = 1; i < 10000; i++) {
     const number = amicable(i);
 
     if (i < number && amicable(number) === i) {
-        result += [...getProperDivisors(i), ...getProperDivisors(number)].reduce(sumFactors, 0);
+        result += [...getProperDivisors(i), ...getProperDivisors(number)].reduce(sum, 0);
     }
 }
 
