@@ -2,10 +2,10 @@ console.info('Calculating solution for Project Euler Problem 12...\r\n');
 const start = Date.now();
 
 const getDivisors = (number) =>
-    Array(Math.floor(Math.sqrt(number))).fill(0)
+    getDivisors[number] || (getDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0)
         .map(mapValue)
         .filter(value => isFactorOf(number, value))
-        .reduce((factors, factor) => [...factors, factor, number / factor], []);
+        .reduce((factors, factor) => [...factors, factor, number / factor], []));
 
 const getSum = (accumulator, value) =>
     accumulator + value;
