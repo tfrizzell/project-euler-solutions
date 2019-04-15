@@ -1,0 +1,1 @@
+Resources downloaded from https://projecteuler.net are stored here, but not used in the solutions. To make it easier for viewers to run the solutions in various Javascript platforms, the contents have been embedded directly into the .js files.
