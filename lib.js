@@ -9,43 +9,35 @@ const add = (...numbers) => {
         return numbers.reduce((x, y) => add(x, y));
     }
 
-    const [numX, numY] = numbers.map(num => parseInt(num));
+    const [valA, valB] = numbers.map(num => parseFloat(num));
+    const negative = {x: (valA < 0), y: (valB < 0)};
+    const padding = Math.max(parseInt(valA).toString().replace(/^-/, '').length, parseInt(valB).toString().replace(/^-/, '').length);
+    const significantDigits = Math.max(...numbers.map(number => ({1: '', .../\.(\d+)$/.exec(number)})[1].length));
 
-    const multiplier = {
-        x: (numX < 0 ? -1 : 1),
-        y: (numY < 0 ? -1 : 1),
-    };
+    const [x, y] = numbers.map(number => {
+        number = number.toString().replace(/^-/, '').padStart(padding, '0');
 
-    const padding = Math.max(
-        Math.abs(numX).toString().length,
-        Math.abs(numY).toString().length,
-    );
+        if (significantDigits > 0) {
+            (/^\d+$/.test(number)) && (number = `${number}.0`);
+            number = number.replace(/\.(\d+)/, (a, b) => b.padEnd(significantDigits, '0'));
+        }
 
-    const significantDigits = Math.max(
-        {1: '', .../\.(\d+)$/.exec(numX)}[1].length,
-        {1: '', .../\.(\d+)$/.exec(numY)}[1].length,
-    );
-
-    const x = Math.abs(Math.max(numX, numY)).toString().padStart(padding, '0');
-    const y = Math.abs(Math.min(numX, numY)).toString().padStart(padding, '0');
+        return number;
+    });
 
     let carry = 0;
     let result = '';
 
-    for (let i = padding - 1; i >= 0; i--) {
-        const z = carry + (parseInt(x[i]) * multiplier.x) + (parseInt(y[i]) * multiplier.y);
-        carry = Math.floor(z / 10);
+    for (let i = x.length - 1; i >= 0; i--) {
+        const z = carry + (negative.x ? -parseInt(x[i]) : parseInt(x[i])) + (negative.y ? -parseInt(y[i]) : parseInt(y[i]));
+        carry = (z >= 0) ? Math.floor(z / 10) : Math.ceil(z / 10);
         result = `${Math.abs(z) % 10}${result}`;
     }
 
-    if (carry < 0) {
-        if (carry < -1) {
-            result = `${carry + 1}${result}`;
-        } else {
-            result = `-${result}`;
-        }
-    } else if (carry > 0) {
-        result = `1${result}`
+    if (valA + valB < 0) {
+        result = `-${carry}${result}`.replace(/^\-+/, '-').replace(/^-0+/, '-');
+    } else {
+        result = `${carry}${result}`
     }
 
     if (significantDigits > 0) {
@@ -169,7 +161,19 @@ const multiply = (...numbers) => {
 
     const negative = (numbers.filter(number => parseInt(number) < 0).length % 2 !== 0)
     const significantDigits = numbers.reduce((sum, value) => sum + {1: '', .../\.(\d+)$/.exec(value)}[1].length, 0);
-    const [x, y] = numbers.map(number => Math.abs(number).toString().replace(/\.(\d+)/, '$1'));
+    const decimals = Math.max(...numbers.map(number => ({1: '', .../\.(\d+)$/.exec(number)})[1].length));
+
+    const [x, y] = numbers.map(number => {
+        number = number.toString().replace(/^-/, '');
+
+        if (decimals > 0) {
+            (/^\d+$/.test(number)) && (number = `${number}.0`);
+            number = number.replace(/\.(\d+)/, (a, b) => b.padEnd(decimals, '0'));
+        }
+
+        return number;
+    });
+
     const results = [];
 
     for (let i = x.length - 1; i >= 0; i--) {
@@ -219,49 +223,42 @@ const subtract = (...numbers) => {
         return numbers.reduce((x, y) => subtract(x, y));
     }
 
-    const [intA, intB] = numbers.map(num => parseInt(num));
+    const [valA, valB] = numbers.map(num => parseFloat(num));
+    const negative = {x: (valA < 0), y: (valB < 0)};
+    const padding = Math.max(parseInt(valA).toString().replace(/^-/, '').length, parseInt(valB).toString().replace(/^-/, '').length);
+    const significantDigits = Math.max(...numbers.map(number => ({1: '', .../\.(\d+)$/.exec(number)})[1].length));
 
-    const multiplier = {
-        x: (intA > 0 ? -1 : 1),
-        y: (intB < 0 ? -1 : 1),
-    };
+    const [x, y] = numbers.map(number => {
+        number = number.toString().replace(/^-/, '').padStart(padding, '0');
 
-    const padding = Math.max(
-        Math.abs(intA).toString().length,
-        Math.abs(intB).toString().length,
-    );
+        if (significantDigits > 0) {
+            (/^\d+$/.test(number)) && (number = `${number}.0`);
+            number = number.replace(/\.(\d+)/, (a, b) => b.padEnd(significantDigits, '0'));
+        }
 
-    const significantDigits = Math.max(
-        {1: '', .../\.(\d+)$/.exec(intA)}[1].length,
-        {1: '', .../\.(\d+)$/.exec(intB)}[1].length,
-    );
+        return number;
+    });
 
-    const x = Math.abs(Math.max(intA, intB)).toString().padStart(padding, '0');
-    const y = Math.abs(Math.min(intA, intB)).toString().padStart(padding, '0');
     let carry = 0;
-    let value = '';
+    let result = '';
 
-    for (let i = padding - 1; i >= 0; i--) {
-        const z = carry - (parseInt(x[i]) * multiplier.x) - (parseInt(y[i]) * multiplier.y);
-        carry = Math.floor(z / 10);
-        value = `${Math.abs(z) % 10}${value}`;
+    for (let i = x.length - 1; i >= 0; i--) {
+        const z = carry - (negative.x ? -parseInt(x[i]) : parseInt(x[i])) - (negative.y ? parseInt(y[i]) : -parseInt(y[i]));
+        carry = (z >= 0) ? Math.floor(z / 10) : Math.ceil(z / 10);
+        result = `${Math.abs(z) % 10}${result}`;
     }
 
-    if (carry < 0) {
-        if (carry < -1) {
-            value = `${carry + 1}${value}`;
-        } else {
-            value = `-${value}`;
-        }
-    } else if (carry > 0) {
-        value = `1${value}`
+    if (valA + valB < 0) {
+        result = `-${carry}${result}`.replace(/^\-+/, '-').replace(/^-0+/, '-');
+    } else {
+        result = `${carry}${result}`
     }
 
     if (significantDigits > 0) {
-        value = `${value.slice(0, value.length - significantDigits)}.${value.slice(-significantDigits)}`.replace(/0+$/, '').replace(/\.+$/, '').replace(/^\.+/, '0.');
+        result = `${result.slice(0, result.length - significantDigits)}.${result.slice(-significantDigits)}`.replace(/0+$/, '').replace(/\.+$/, '').replace(/^\.+/, '0.');
     }
 
-    return value.replace(/^(-)?(?:-+)?0+([^.])/, '$1$2');
+    return result.replace(/^(-)?(?:-+)?0+([^.])/, '$1$2');
 };
 
 const triangleNumber = (number) =>
