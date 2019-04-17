@@ -21,16 +21,12 @@ const number =
     07198403850962455444362981230987879927244284909188
     84580156166097919133875499200524063689912560717606
     05886116467109405077541002256983155200055935729725
-    71636269561882670428252483600823257530420752963450`
-        .replace(/\D+/g, '');
-
-const getProduct = (accumulator, value) =>
-    accumulator * value;
+    71636269561882670428252483600823257530420752963450`.replace(/\D+/g, '');
 
 let result = 0;
 
 for (let i = 0; i < number.length; i++) {
-    const product = number.substr(i, 13).split('').reduce(getProduct, 1);
+    const product = number.substr(i, 13).split('').reduce((product, value) => product * value, 1);
     result = Math.max(product, result);
 }
 

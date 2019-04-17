@@ -12,7 +12,7 @@ const isPrime = (number) => {
     }
 
     for (let i = 2; i < root; i++) {
-        if (isFactorOf(number, i)) {
+        if (number % i === 0) {
             return false;
         }
     }
@@ -20,5 +20,9 @@ const isPrime = (number) => {
     return true;
 };
 
-console.log('Result:', Array(2000000).fill(0).map((_, index) => index + 1).filter(isPrime).reduce((accumulator, value) => accumulator + value, 0));
+const result = Array(2000000).fill(0).map((_, index) => index + 1)
+    .filter(isPrime)
+    .reduce((accumulator, value) => accumulator + value, 0);
+
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

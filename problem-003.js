@@ -12,7 +12,7 @@ const isPrime = (number) => {
     }
 
     for (let i = 2; i < root; i++) {
-        if (isFactorOf(number, i)) {
+        if (number % i === 0) {
             return false;
         }
     }
@@ -21,6 +21,8 @@ const isPrime = (number) => {
 };
 
 const number = 600851475143;
+const result = Math.max(...Array(Math.floor(Math.sqrt(number))).fill(0).map((_, index) => index + 1)
+    .filter(value => isPrime(value) && isFactorOf(number, value)));
 
-console.log('Result:', Math.max(...Array(Math.floor(Math.sqrt(number))).fill(0).map((_, index) => index + 1).filter(value => isPrime(value) && isFactorOf(number, value))));
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

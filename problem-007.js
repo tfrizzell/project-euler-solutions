@@ -12,7 +12,7 @@ const isPrime = (number) => {
     }
 
     for (let i = 2; i < root; i++) {
-        if (isFactorOf(number, i)) {
+        if (number % i === 0) {
             return false;
         }
     }
@@ -20,8 +20,8 @@ const isPrime = (number) => {
     return true;
 };
 
-let result = 1,
-    counter = 0;
+let counter = 0;
+let result = 1;
 
 while (counter < 10001) {
     counter += isPrime(result++);

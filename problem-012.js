@@ -2,28 +2,19 @@ console.info('Calculating solution for Project Euler Problem 12...\r\n');
 const start = Date.now();
 
 const getDivisors = (number) =>
-    getDivisors[number] || (getDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0)
-        .map(mapValue)
-        .filter(value => isFactorOf(number, value))
-        .reduce((factors, factor) => [...factors, factor, number / factor], []));
-
-const getSum = (accumulator, value) =>
-    accumulator + value;
+    getDivisors[number] || (getDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0).map((_, index) => index + 1)
+        .filter(value => number % value === 0)
+        .reduce((divisors, divisor) => [...divisors, divisor, number / divisor], []));
 
 const isFactorOf = (number, factor) =>
     number % factor === 0;
 
-const mapValue = (_, index) =>
-    index + 1;
-
 const triangleNumber = (number) =>
-    Array(number).fill(0)
-        .map(mapValue)
-        .reduce(getSum, 0);
+    Array(number).fill(0).map((_, index) => index + 1).reduce((sum, value) => sum + value, 0);
 
-let factors = [],
-    index = 0,
-    result;
+let factors = [];
+let index = 0;
+let result;
 
 while (factors.length <= 500) {
     result = triangleNumber(index++);

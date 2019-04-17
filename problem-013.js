@@ -101,8 +101,10 @@ const numbers =
     77158542502016545090413245809786882778948721859617
     72107838435069186155435662884062257473692284509516
     20849603980134001723930671666823555245252804609722
-    53503534226472524250874054075591789781264330331690`
-        .split(/\D+/).map(number => +number);
+    53503534226472524250874054075591789781264330331690`.split(/\D+/).map(number => +number);
 
-console.log('Result:', numbers.reduce((accumulator, value) => accumulator + value, 0).toString().replace('.', '').substr(0, 10));
+const result = numbers
+    .reduce((sum, value) => sum + value, 0).toString().replace('.', '').substr(0, 10);
+
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

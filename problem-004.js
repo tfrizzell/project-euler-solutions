@@ -1,16 +1,14 @@
 console.info('Calculating solution for Project Euler Problem 4...\r\n');
 const start = Date.now();
 
-const isPalindrome = (value) => {
-    const array = String(value).split('');
-    return array.join('') === array.reverse().join('');
-};
+const isPalindrome = (value) =>
+    value.toString().split('').reduce((result, char, index, array) => result && (char === array[array.length - index - 1]), true);
 
 let result = 0;
 
-for (let a = 100; a < 1000; a++) {
-    for (let b = 100; b < 1000; b++) {
-        const product = a * b;
+for (let x = 100; x < 1000; x++) {
+    for (let y = 100; y < 1000; y++) {
+        const product = x * y;
         isPalindrome(product) && (result = Math.max(product, result));
     }
 }

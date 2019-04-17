@@ -6,9 +6,11 @@ const isFactorOf = (number, factor) =>
     number % factor === 0;
 
 const factors = Array(20).fill(0).map((_, index) => index + 1);
-
 let result = 1;
-while (!factors.reduce((divisible, factor) => divisible && isFactorOf(result, factor), true) && result++) {}
+
+do {
+    result++
+} while (!factors.reduce((divisible, value) => divisible && isFactorOf(result, value), true));
 
 console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);
