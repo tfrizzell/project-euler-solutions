@@ -4,6 +4,18 @@ const start = Date.now();
 const translate = (number) => {
     const tokens = [];
 
+    const trillion = Math.floor(number / 1000000000000);
+    trillion && tokens.push(translate(billions), 'trillion');
+    number %= 1000000000000;
+
+    const billions = Math.floor(number / 1000000000);
+    billions && tokens.push(translate(billions), 'billion');
+    number %= 1000000000;
+
+    const millions = Math.floor(number / 1000000);
+    millions && tokens.push(translate(millions), 'million');
+    number %= 1000000;
+
     const thousands = Math.floor(number / 1000);
     thousands && tokens.push(translate(thousands), 'thousand');
     number %= 1000;
@@ -56,5 +68,7 @@ const translate = (number) => {
     return tokens.map(text => text.replace(/-+$/g, '')).join(' ');
 };
 
-console.log('Result:', Array(1000).fill(0).map((_, index) => translate(index + 1)).join(' ').replace(/[\s,-]+/g, '').length);
+const result = Array(1000).fill(0).map((_, index) => translate(index + 1)).join(' ').replace(/[\s,-]+/g, '').length;
+
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

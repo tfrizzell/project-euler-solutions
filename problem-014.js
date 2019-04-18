@@ -5,7 +5,7 @@ const collatz = (number) => {
     const sequence = [number];
 
     while (number != 1) {
-        number = isOdd(number)
+        number = (number % 2 === 1)
             ? 3 * number + 1
             : number / 2;
 
@@ -15,11 +15,8 @@ const collatz = (number) => {
     return sequence;
 };
 
-const isOdd = (number) =>
-    number % 2 === 1;
-
-let maxLength = 0,
-    result;
+let maxLength = 0;
+let result;
 
 for (let i = 1; i < 1000000; i++) {
     const sequence = collatz(i);

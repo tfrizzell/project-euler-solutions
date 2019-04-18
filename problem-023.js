@@ -1,27 +1,19 @@
 console.info('Calculating solution for Project Euler Problem 23...\r\n');
 const start = Date.now();
 
-const getDivisors = (number) =>
-    getDivisors[number] || (getDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0)
-        .map(mapValue)
-        .filter(value => isFactorOf(number, value))
-        .reduce((factors, factor) => [...factors, factor, number / factor], []));
-
 const isAbundant = (number) =>
-    isAbundant[number] || (isAbundant[number] = getDivisors(number)
-        .filter((value, index, array) => (array.indexOf(value) === index) && (value < number))
-        .reduce(sum, 0) > number);
+    Array(Math.floor(Math.sqrt(number)))
+        .fill(0).reduce((sum, _, index) => {
+            if (number % (index + 1) === 0) {
+                const factor = number / (index + 1);
+                (index + 1 < number) && (sum += index + 1);
+                (index + 1 < factor) && (factor < number) && (sum += factor);
+            }
 
-const isFactorOf = (number, factor) =>
-    number % factor === 0;
+            return sum;
+        }, 0) > number;
 
-const mapValue = (_, index) =>
-    index + 1;
-
-const sum = (accumulator, value) =>
-    accumulator + value;
-
-const numbers = Array(28123).fill(0).map(mapValue);
+const numbers = Array(28123).fill(0).map((_, index) => index + 1);
 const abundant = numbers.filter(isAbundant);
 const filtered = {};
 
@@ -31,5 +23,7 @@ for (let i = 0; i < abundant.length; i++) {
     }
 }
 
-console.log('Result:', numbers.filter(number => !filtered[number]).reduce(sum, 0));
+const result = numbers.reduce((sum, value) => !filtered[value] ? sum + value : sum, 0);
+
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

@@ -1,23 +1,20 @@
 console.info('Calculating solution for Project Euler Problem 7...\r\n');
 const start = Date.now();
 
-const isFactorOf = (number, factor) =>
-    number % factor === 0;
-
 const isPrime = (number) => {
     const root = Math.sqrt(number);
 
     if (root % 1 === 0) {
-        return false;
+        return isPrime[number] = false;
     }
 
     for (let i = 2; i < root; i++) {
         if (number % i === 0) {
-            return false;
+            return isPrime[number] = false;
         }
     }
 
-    return true;
+    return isPrime[number] = true;
 };
 
 let counter = 0;

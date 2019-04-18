@@ -2,15 +2,11 @@ console.info('Calculating solution for Project Euler Problem 12...\r\n');
 const start = Date.now();
 
 const getDivisors = (number) =>
-    getDivisors[number] || (getDivisors[number] = Array(Math.floor(Math.sqrt(number))).fill(0).map((_, index) => index + 1)
-        .filter(value => number % value === 0)
-        .reduce((divisors, divisor) => [...divisors, divisor, number / divisor], []));
-
-const isFactorOf = (number, factor) =>
-    number % factor === 0;
+    Array(Math.floor(Math.sqrt(number)))
+        .fill(0).reduce((divisors, _, index) => (number % (index + 1) === 0) ? [...divisors, index + 1, number / (index + 1)] : divisors, []);
 
 const triangleNumber = (number) =>
-    Array(number).fill(0).map((_, index) => index + 1).reduce((sum, value) => sum + value, 0);
+    Array(number).fill(0).reduce((sum, _, index) => sum + index + 1, 0);
 
 let factors = [];
 let index = 0;

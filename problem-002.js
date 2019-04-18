@@ -11,9 +11,7 @@ do {
     sequence = fibonacci(index++);
 } while (Math.max(...sequence) < 4000000);
 
-const result = sequence
-    .filter(value => value % 2 === 0)
-    .reduce((sum, value) => sum + value, 0)
+const result = sequence.reduce((sum, value) => (value % 2 === 0) ? sum + value : sum, 0)
 
 console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

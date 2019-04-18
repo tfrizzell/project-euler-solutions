@@ -103,8 +103,7 @@ const numbers =
     20849603980134001723930671666823555245252804609722
     53503534226472524250874054075591789781264330331690`.split(/\D+/).map(number => +number);
 
-const result = numbers
-    .reduce((sum, value) => sum + value, 0).toString().replace('.', '').substr(0, 10);
+const result = numbers.reduce((sum, value) => sum + value, 0).toString().replace('.', '').substr(0, 10);
 
 console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

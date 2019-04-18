@@ -16,7 +16,6 @@ const add = (a, b) => {
 
         if (carry && value[i + 1] === undefined) {
             value += 0;
-            console.log('->', value);
         }
     }
 

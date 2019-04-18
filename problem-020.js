@@ -2,25 +2,31 @@ console.info('Calculating solution for Project Euler Problem 20...\r\n');
 const start = Date.now();
 
 const factorial = (number) => {
-    if (number <= 1) {
+    if (number % 1 !== 0) {
+        throw new RangeError(`factorial() does not currently support decimal values`);
+    }
+
+    if (number < 0) {
+        return `-${factorial(-number)}`;
+    } else if (number <= 1) {
         return '1';
     }
 
-    let value = factorial(number - 1).split('').reverse().join(''),
-        carry = 0;
-    
-    for (let i = 0; i < value.length; i++) {
-        const val = (value[i] * number) + carry;
-        carry = Math.floor(val / 10);
-        value = `${value.substr(0, i)}${val % 10}${value.substr(i + 1)}`;
+    const y = factorial(number - 1);
+    let carry = 0;
+    let result = '';
 
-        if (carry && value[i + 1] === undefined) {
-            value += 0;
-        }
+    for (let i = y.length - 1; i >= 0; i--) {
+        const z = carry + (number * parseInt(y[i]));
+        carry = Math.floor(z / 10);
+        result = `${z % 10}${result}`;
     }
 
-    return value.split('').reverse().join('');
+    carry && (result = `${carry}${result}`);
+    return result;
 };
 
-console.log('Result:', factorial(100).split('').reduce((accumulator, value) => accumulator + parseInt(value), 0));
+const result = factorial(100).split('').reduce((sum, value) => sum + parseInt(value), 0);
+
+console.log('Result:', result);
 console.log('\r\nExecution Time:', `${Date.now() - start}ms`);

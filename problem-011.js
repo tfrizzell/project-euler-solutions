@@ -27,17 +27,25 @@ let result = 0;
 
 for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
-        const horizontal = grid[i].slice(j, j + 4).filter(value => value !== undefined);
-        (horizontal.length === 4) && (result = Math.max(horizontal.reduce((x, y) => x * y, 1), result));
+        if (j + 4 < grid[i].length) {
+            const horizontal = grid[i].slice(j, j + 4);
+            result = Math.max(horizontal.reduce((product, value) => product * value, 1), result);
+        }
 
-        const vertical = grid.slice(i, i + 4).map(row => row[j]).filter(value => value !== undefined);
-        (vertical.length === 4) && (result = Math.max(vertical.reduce((x, y) => x * y, 1), result));
+        if (i + 4 < grid.length) {
+            const vertical = grid.slice(i, i + 4).map(row => row[j]);
+            result = Math.max(vertical.reduce((product, value) => product * value, 1), result);
+        }
 
-        const diagRight = grid.slice(i, i + 4).map((row, index) => row[j + index]).filter(value => value !== undefined);
-        (diagRight.length === 4) && (result = Math.max(diagRight.reduce((x, y) => x * y, 1), result));
+        if (i + 4 < grid.length && j + 4 < grid[i + 4].length) {
+            const diagRight = grid.slice(i, i + 4).map((row, index) => row[j + index]);
+            result = Math.max(diagRight.reduce((product, value) => product * value, 1), result);
+        }
 
-        const diagLeft = grid.slice(i, i + 4).map((row, index) => row[j - index]).filter(value => value !== undefined);
-        (diagLeft.length === 4) && (result = Math.max(diagLeft.reduce((x, y) => x * y, 1), result));
+        if (i + 4 < grid.length && j - 4 >= 0) {
+            const diagLeft = grid.slice(i, i + 4).map((row, index) => row[j - index]);
+            result = Math.max(diagLeft.reduce((product, value) => product * value, 1), result);
+        }
     }
 }
 

@@ -27,8 +27,8 @@ const getPermutations = (set) => {
 
 const set = Array(10).fill(0).map((_, index) => index);
 
-let counter = 0,
-    result;
+let counter = 0;
+let result;
 
 for (let i = 0; !result && i < set.length; i++) {
     const digit = set[i];
