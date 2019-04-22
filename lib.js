@@ -118,10 +118,10 @@ const divide = (...numbers) => {
     let significantDigits = 0;
     let result = '';
 
-    for (let i = y.length; ((i < x.length) || (remainder !== 0)) && (significantDigits <= 25); i++) {
+    for (let i = y.length; !result || (((i < x.length) || (remainder !== 0)) && (significantDigits <= 17)); i++) {
         (x[i] === '.') && i++;
 
-        if (x[i] === undefined) {
+        while (x[i] === undefined) {
             x = `${x}0`;
             significantDigits++;
         }
@@ -131,7 +131,7 @@ const divide = (...numbers) => {
         while (parseInt(number) < parseInt(y) && i++) {
             (x[i] === '.') && i++;
 
-            if (x[i] === undefined) {
+            while (x[i] === undefined) {
                 x = `${x}0`;
                 significantDigits++;
             }
@@ -145,7 +145,11 @@ const divide = (...numbers) => {
     }
 
     if (significantDigits > 0) {
-        result = `${result.slice(0, result.length - significantDigits)}.${result.slice(-significantDigits)}`.replace(/0+$/, '').replace(/\.+$/, '').replace(/^\.+/, '0.');
+        if (result.length > significantDigits) {
+            result = `${result.slice(0, result.length - significantDigits)}.${result.slice(-significantDigits)}`.replace(/0+$/, '').replace(/\.+$/, '').replace(/^\.+/, '0.');
+        } else {
+            result = `0.${result}`;
+        }
     }
 
     return `${negative ? '-' : ''}${result.replace(/^0+([^.])/g, '$1')}`;
@@ -211,6 +215,31 @@ const getProperDivisors = (number) =>
             return divisors;
         }, []);
 
+const getRecurringCycleLength = (number) => {
+    const cycle = Array(number).fill(0);
+    let value = 1;
+    let position = 1;
+
+    while (cycle[value] === 0 && value !== 0) {
+        cycle[value] = position++;
+        value = (value * 10) % number;
+    }
+
+    return position - cycle[value];
+};
+
+const getRecurringCycleLength = (number) => {
+    const cycle = Array(number).fill(0);
+    let value = 1;
+    let position = 1;
+
+    while (cycle[value] === 0 && value !== 0) {
+        cycle[value] = position++;
+        value = (value * 10) % number;
+    }
+
+    return position - cycle[value];
+};
 const getStringValue = (name) =>
     name.split('').reduce((sum, char) => sum + (/[A-Z]/i.test(char) ? char.charCodeAt(0) - 64 : 0), 0);
 
