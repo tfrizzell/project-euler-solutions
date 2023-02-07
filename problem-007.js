@@ -2,7 +2,7 @@ console.info('Calculating solution for Project Euler Problem 7...\r\n');
 const start = Date.now();
 
 const isPrime = (number) => {
-    const root = Math.sqrt(number);
+    const root = Math.sqrt(Math.abs(number));
 
     if (root % 1 === 0) {
         return isPrime[number] = false;

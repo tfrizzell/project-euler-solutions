@@ -6,7 +6,7 @@ const isFactorOf = (number, factor) =>
     number % factor === 0;
 
 const isPrime = (number) => {
-    const root = Math.sqrt(number);
+    const root = Math.sqrt(Math.abs(number));
 
     if (root % 1 === 0) {
         return isPrime[number] = false;

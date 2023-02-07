@@ -262,7 +262,7 @@ const isPalindrome = (value) =>
     value.toString().split('').reduce((result, char, index, array) => result && (char === array[array.length - index - 1]), true);
 
 const isPrime = (number) => {
-    const root = Math.sqrt(number);
+    const root = Math.sqrt(Math.abs(number));
 
     if (root % 1 === 0) {
         return false;
