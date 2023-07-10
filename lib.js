@@ -228,18 +228,6 @@ const getRecurringCycleLength = (number) => {
     return position - cycle[value];
 };
 
-const getRecurringCycleLength = (number) => {
-    const cycle = Array(number).fill(0);
-    let value = 1;
-    let position = 1;
-
-    while (cycle[value] === 0 && value !== 0) {
-        cycle[value] = position++;
-        value = (value * 10) % number;
-    }
-
-    return position - cycle[value];
-};
 const getStringValue = (name) =>
     name.split('').reduce((sum, char) => sum + (/[A-Z]/i.test(char) ? char.charCodeAt(0) - 64 : 0), 0);
 
