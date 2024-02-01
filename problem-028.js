@@ -1,4 +1,4 @@
-console.info('Calculating solution for Project Euler Problem 27...\r\n');
+console.info('Calculating solution for Project Euler Problem 28...\r\n');
 const start = Date.now();
 
 const createSpiral = (n) => {
